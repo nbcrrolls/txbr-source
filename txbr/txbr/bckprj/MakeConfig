@@ -1,0 +1,39 @@
+# make sure to include ./ConfigInfo.txt beforehand
+
+MAKE:=make
+
+CC := gcc
+NVCC := nvcc
+
+PIC_FLAGS := -fPIC
+ARCH_FLAGS := $(PIC_FLAGS) -m64 -D_FILE_OFFSET_BITS=64
+WARNINGS_FLAGS := -Wall
+DEBUG_FLAGS :=
+OPTIMIZATION_FLAGS := -O3
+EXCEPTIONS_FLAGS := -fexceptions
+
+BASE_COMP_FLAGS := $(ARCH_FLAGS) $(WARNINGS_FLAGS) $(DEBUG_FLAGS) $(EXCEPTIONS_FLAGS) $(OPTIMIZATION_FLAGS)
+BASE_LINK_FLAGS := $(WARNINGS_FLAGS) $(EXCEPTIONS_FLAGS)
+BASE_LIBSO_FLAGS := $(PIC_FLAGS) -shared
+
+LIBEXT := so
+LIBDIR :=$(TXBR_BASE_DIR)/lib
+
+MATLAB_INCLUDE_FLAGS := -I$(MATLAB_BASE_DIR)/extern/include
+MATLAB_LINK_FLAGS := -L$(MATLAB_BASE_DIR)/bin/glnxa64/ -L$(MATLAB_BASE_DIR)/sys/os/glnxa64 -leng -lmx
+
+MEX := $(MATLAB_BASE_DIR)/bin/mex
+MEX_FLAGS := -f $(TXBR_BASE_DIR)/matlab/matopts_bcc.sh
+
+IMOD_INCLUDE_FLAGS := -I$(TXBR_BASE_DIR)/txbr/include/imod
+IMOD_LINK_FLAGS := -L$(IMOD_BASE_DIR)/lib -liimod -limod -lcfshr -lguide -lpthread
+
+TXBR_INCLUDE_FLAGS := -I$(TXBR_BASE_DIR)/txbr/include/txbr
+
+TIFF_LINK_FLAGS := -ltiff
+
+CUDA_EMULATION_FLAG := -deviceemu
+CUDA_INCLUDE_FLAGS := -DUNIX $(TXBR_INCLUDE_FLAGS) --gpu-architecture=sm_13 --use_fast_math
+CUDA_LIB_FLAGS :=  -L$(CUDA_BASE_DIR)/lib64 -lcudart
+
+

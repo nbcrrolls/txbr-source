@@ -1,0 +1,125 @@
+TxBR (Transform based Tracking, Bundle adjustment and Reconstruction) is a software package developped for Electron Tomography (ET) purpose. It is able to take into account the curvilinear nature of electron trajectories. TxBR also offers the possibility of reconstructing seemlessly a volume from an indefinite number of tilt-series taken at different specimen orientation (single tilt-series, dual tilt series, triple...). The TxBR weighted-backprojection scheme can be run in parallel both on CPU or GPU clusters. 
+
+This code is written in python and C and makes use of other existing libraries that need to be installed beforehand. For doing reconstruction, the pre-requisite packages are: the Enthought Python Distribution, the Class Library for Numbers (CLN) as well as the GiNaC symbolic package, the python swiginac bindings, the fftw3 package, openCV (as well as some related python bindings), libtiff and finally the IMOD EM package from Boulder University. The LaTeX package should also be available.
+
+
+I. Installing the different prerequisite packages used for TxBR reconstructions.
+
+In the following, we consider the case of a local installation where all the libraries will be installed in a directory $HOME/usr/local. In such a configuration, the user does not need any special permissions. The installation here is outlined for a RedHat or CentOS Linux distribution. It has been checked on CentOS 5.3 64bits. Installing all the depencies can be time-consuming, up to a couple hours; cmake is needed for step 6, the installation of openCV.
+
+1. Install Enthought Python Distribution
+
+Download the Enthought Python Distribution at http://www.enthought.com/products/epd.php. It contains most of the needed scientific python modules in a working and contained package. It is free for academic purposes. Enthought offers distribution for linux Redhat, OSX and Windows. As an alternative to EPD, it is always possible to install individually some of its core packages (numpy, scipy, matplolib, mayavi, MPICH2, mpi4py), but it is more difficult and more time consuming. To install EPD, run the installer script (for example ./epd-5.0.0-rh5-x86_64.sh for Redhat systems running on 64 bits machines). Make sure to specify your directory $HOME/usr/local as an alternate location for the installation.
+
+Once EPD installed, add the directory $HOME/usr/local/bin in your path by modifying your shell configuration file (.basrc for bash or .cshrc for csh). Add the line,
+
+export PATH=$HOME/usr/local/bin:$PATH
+
+To check everything is correct, make sure your default python interpreter points to $HOME/usr/local/python.
+
+Make sure also to add $HOME/usr/local/bin in the LD_LIBRARY_PATH environment variable by editing the .basrc file in case your environment . Add in this later:
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/usr/local/lib
+
+2. Install the Class Library for Numbers (CLN version later than 1.3.1)
+
+Download the CLN package from http://www.ginac.de/CLN/cln-1.3.1.tar.bz2. Unpack and untar CLN zip file. Run the configure script with the --prefix option to specify where the EPD lives
+
+./configure --prefix=$HOME/usr/local
+
+Once configured, run make ; make install to finish and install CLN. This operation can be time consuming. CLN libraries will be placed in a hierarchy of directories starting with the specified prefix.
+
+3. Install the GiNaC is not a CAS package (GiNaC version 1.5.2; there might be compilation error with 1.5.3)
+
+Installing GiNaC is very similar to installing CLN. CLN need to be installed prior to GiNaC.
+
+Download GiNaC from ftp://ftpthep.physik.uni-mainz.de/pub/gnu/; unpack and untar the package. To compile GiNaC, one needs to specify where the pkgconfig path is located in our local setup. For instance with a bash shell, the environment variable PKG_CONFIG_PATH should be set up as follows:
+
+export PKG_CONFIG_PATH=$HOME/usr/local/lib/pkgconfig
+
+Then, run the configure script:
+
+./configure --prefix=$HOME/usr/local
+
+Once the software is configured, run make, and then make install to compile and install the software:
+
+4. Install swiginac (version later than 1.5.1)
+
+swiginac is a set of python bindings to the GiNaC symbolic computations package. You can download the code from the link http://download.berlios.de/swiginac/swiginac-1.5.1.tgz. Unpack and untar the package.
+
+To install swiginac, simply run:
+
+python setup.py build
+python setup.py install --prefix=$HOME/usr/local
+
+5. Building and Installing fftw3 (version later than 3.2.2)
+
+Download the latest fftw3 package from the link http://www.fftw.org/download.html. The package should be installed twice, one in its default configuration and the other one in a configuration that enables float calculations.
+
+./configure --enable-shared --prefix=$HOME/usr/local
+make
+make install
+
+./configure --enable-float --enable-shared --prefix=$HOME/usr/local
+make
+make install
+
+6. Building and Installing openCV (version 1.1.pre1)
+
+Follow the instructions to install openCV from the link http://opencv.willowgarage.com/wiki/InstallGuide. Make sure to build the package with python support ON and so the prefix match your local installation. Also make sure, you compile openCV both for debug and release. In short, do the following steps from the openCV directory after having dowloaded, unpacked and untared the packaged: 
+
+mkdir build
+cd build
+cmake -D CMAKE_INSTALL_PREFIX=$HOME/usr/local -D BUILD_PYTHON_SUPPORT=ON ..
+make
+make install
+
+7. Install ZopenCV (optional, only for flattening; version later than 1.1)
+
+You should skip the installation of this wrapper at first. Documentation of this openCV wrapper can be found at http://jfli.nii.ac.jp/wikijfli/ZOpenCV. You can download the wrapper buildzopencv_alpha.tar.gz from http://jfli.nii.ac.jp/wikijfli/ZOpenCV?action=AttachFile. Unpack and untar the package.  Drop all the zopencv files into the directory $HOME/usr/local/lib/python/site-packages. Finally, make sure the latter directory is included in your python path. In the case of a bash setup, add the following line into your .basrc file:
+
+export PYTHONPATH=$PYTHONPATH:$HOME/usr/local/lib/python/site-packages
+
+8. Install IMOD (version 3.13.5)
+
+Download the code http://bio3d.colorado.edu/imod/download.html. Run the installer script. In the case of a Redhat linux distribution:
+
+csh imod_3.13.5_RH9.0.csh -dir $HOME/usr/local -script $HOME/usr/local
+
+Finally set up an IMOD environment variable to point to the IMOD diretory. In the case of a bash environment:
+
+export IMOD=$HOME/usr/local/IMOD
+
+Add the IMOD library directory in the LD_LIBRARY_PATH. For bash environment, add the following line in the .basrc file: 
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$IMOD/lib
+
+9. Make sure the libtiff library and headers are available
+
+II. Building and installing the TxBR package
+
+Dowload the latest release of TxBR from https://confluence.crbs.ucsd.edu/display/ncmir/TxBR
+
+Unpack and untar the TxBR package. Set up two extra environment variables, $TXBR and $TXBR_DIR, in your shell configuration file. $TXBR will point to the directory where the sources are, while TxBR_DIR will point to the directory where TxBR is going to be installed. In the case of a bash setup, add the following lines into your .basrc file:
+
+export TXBR='directory containing the TxBR code'
+export TxBR_DIR=$HOME/usr/local/TxBR
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$TXBR/lib
+
+Edit the file config/setup.cfg.linux and explicitely replace $HOME with your home directory path. For instance if your $HOME directory is /home/mterada, then
+
+include-dirs=/home/mterada/usr/local/include:/home/mterada/usr/local/include/opencv
+library-dirs=/home/mterada/usr/local/lib
+
+Now build and install the TxBR code by typing:
+
+python setup.py build
+python setup.py install
+
+Finally, add $TXBR_DIR/scripts to your path and $TXBR_DIR/lib to your python path:
+
+export PATH=$PATH:$TXBR_DIR/scripts
+export PYTHONPATH=$PYTHONPATH:$TXBR_DIR/lib
+
+For how to run TxBR on a simple example, check the README.md file.
+

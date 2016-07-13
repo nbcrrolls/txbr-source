@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <schema targetNamespace="http://tempuri.org/txbr.xsd"
+  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:txbr="http://tempuri.org/txbr.xsd"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="unqualified"
+  attributeFormDefault="unqualified">
+  <import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/"/>
+  <!-- operation request element -->
+  <element name="runOFFTxbr">
+   <complexType>
+    <sequence>
+     <element name="fileFolderLocation" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="workDirectory" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="basename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="type" type="txbr:FILE-TYPE" minOccurs="1" maxOccurs="1"/>
+     <element name="scope" type="txbr:SCOPE" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="runOFFTxbrResponse">
+   <complexType>
+    <sequence>
+     <element name="return-val" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="resetOFFTxbr">
+   <complexType>
+    <sequence>
+     <element name="workDirectory" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="resetOFFTxbrResponse">
+   <complexType>
+    <sequence>
+     <element name="return-val" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="statOFFTxbr">
+   <complexType>
+    <sequence>
+     <element name="workDirectory" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="statOFFTxbrResponse">
+   <complexType>
+    <sequence>
+     <element name="return-val" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+ </schema>
+

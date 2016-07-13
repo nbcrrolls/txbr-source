@@ -1,0 +1,14 @@
+export IMOD_DIR="$INSTALL_DIR/IMOD"
+export TXBR_DIR="$INSTALL_DIR/TxBR-$VERSION"
+
+if [ -z $PYTHONPATH ]; then
+    export PYTHONPATH="$TXBR_DIR/lib":"$INSTALL_DIR/lib/python":$PYTHONPATH;
+else
+    export PYTHONPATH="$TXBR_DIR/lib":"$INSTALL_DIR/lib/python";
+fi
+
+export LD_LIBRARY_PATH="$IMOD_DIR/lib":"$IMOD_DIR/qtlib":"$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="$INSTALL_DIR/lib":"$LD_LIBRARY_PATH"
+
+export PATH="$TXBR_DIR/scripts":"$IMOD_DIR/bin":"$INSTALL_DIR/bin":"$PATH"
+

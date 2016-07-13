@@ -1,0 +1,15 @@
+setenv IMOD_DIR "$INSTALL_DIR/IMOD"
+setenv TXBR_DIR "$INSTALL_DIR/TxBR-$VERSION"
+
+if ($?PYTHONPATH) then
+    setenv PYTHONPATH "$TXBR_DIR/lib":"$INSTALL_DIR/lib/python":$PYTHONPATH
+else
+    setenv PYTHONPATH "$TXBR_DIR/lib":"$INSTALL_DIR/lib/python"
+endif
+
+setenv LD_LIBRARY_PATH "$IMOD_DIR/lib":"$IMOD_DIR/qtlib":"$LD_LIBRARY_PATH"
+setenv LD_LIBRARY_PATH "$INSTALL_DIR/lib":"$LD_LIBRARY_PATH"
+
+setenv PATH "$TXBR_DIR/scripts":"$IMOD_DIR/bin":"$INSTALL_DIR/bin":"$PATH"
+
+set prompt="%{\033[31m%}[txbr-$VERSION@%m]%{\033[35m%}\>"

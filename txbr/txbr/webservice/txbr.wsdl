@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="Service"
+ targetNamespace="http://tempuri.org/txbr.xsd/Service.wsdl"
+ xmlns:tns="http://tempuri.org/txbr.xsd/Service.wsdl"
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:txbr="http://tempuri.org/txbr.xsd"
+ xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:MIME="http://schemas.xmlsoap.org/wsdl/mime/"
+ xmlns:DIME="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/"
+ xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/"
+ xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<types>
+
+ <schema targetNamespace="http://tempuri.org/txbr.xsd"
+  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:txbr="http://tempuri.org/txbr.xsd"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="unqualified"
+  attributeFormDefault="unqualified">
+  <import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/"/>
+  <simpleType name="FILE-TYPE">
+   <restriction base="xsd:string">
+    <enumeration value="JPG"/><!-- enum const = 0 -->
+    <enumeration value="TIF"/><!-- enum const = 1 -->
+   </restriction>
+  </simpleType>
+  <simpleType name="SCOPE">
+   <restriction base="xsd:string">
+    <enumeration value="J3200"/><!-- enum const = 0 -->
+    <enumeration value="J4000-1"/><!-- enum const = 1 -->
+    <enumeration value="J4000-2"/><!-- enum const = 2 -->
+    <enumeration value="FEI-titan"/><!-- enum const = 3 -->
+    <enumeration value="FEI-spirit"/><!-- enum const = 4 -->
+   </restriction>
+  </simpleType>
+  <!-- operation request element -->
+  <element name="runOFFTxbr">
+   <complexType>
+    <sequence>
+     <element name="fileFolderLocation" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="workDirectory" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="basename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="type" type="txbr:FILE-TYPE" minOccurs="1" maxOccurs="1"/>
+     <element name="scope" type="txbr:SCOPE" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="runOFFTxbrResponse">
+   <complexType>
+    <sequence>
+     <element name="return-val" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="resetOFFTxbr">
+   <complexType>
+    <sequence>
+     <element name="workDirectory" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="resetOFFTxbrResponse">
+   <complexType>
+    <sequence>
+     <element name="return-val" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="statOFFTxbr">
+   <complexType>
+    <sequence>
+     <element name="workDirectory" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="statOFFTxbrResponse">
+   <complexType>
+    <sequence>
+     <element name="return-val" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+   </complexType>
+  </element>
+ </schema>
+
+</types>
+
+<message name="runOFFTxbrRequest">
+ <part name="parameters" element="txbr:runOFFTxbr"/>
+</message>
+
+<message name="runOFFTxbrResponse">
+ <part name="parameters" element="txbr:runOFFTxbrResponse"/>
+</message>
+
+<message name="resetOFFTxbrRequest">
+ <part name="parameters" element="txbr:resetOFFTxbr"/>
+</message>
+
+<message name="resetOFFTxbrResponse">
+ <part name="parameters" element="txbr:resetOFFTxbrResponse"/>
+</message>
+
+<message name="statOFFTxbrRequest">
+ <part name="parameters" element="txbr:statOFFTxbr"/>
+</message>
+
+<message name="statOFFTxbrResponse">
+ <part name="parameters" element="txbr:statOFFTxbrResponse"/>
+</message>
+
+<portType name="ServicePortType">
+ <operation name="runOFFTxbr">
+  <documentation>Service definition of function txbr__runOFFTxbr</documentation>
+  <input message="tns:runOFFTxbrRequest"/>
+  <output message="tns:runOFFTxbrResponse"/>
+ </operation>
+ <operation name="resetOFFTxbr">
+  <documentation>Service definition of function txbr__resetOFFTxbr</documentation>
+  <input message="tns:resetOFFTxbrRequest"/>
+  <output message="tns:resetOFFTxbrResponse"/>
+ </operation>
+ <operation name="statOFFTxbr">
+  <documentation>Service definition of function txbr__statOFFTxbr</documentation>
+  <input message="tns:statOFFTxbrRequest"/>
+  <output message="tns:statOFFTxbrResponse"/>
+ </operation>
+</portType>
+
+<binding name="Service" type="tns:ServicePortType">
+ <SOAP:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+ <operation name="runOFFTxbr">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="resetOFFTxbr">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+ <operation name="statOFFTxbr">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
+</binding>
+
+<service name="Service">
+ <documentation>gSOAP 2.7.17 generated service definition</documentation>
+ <port name="Service" binding="tns:Service">
+  <SOAP:address location="http://localhost:80"/>
+ </port>
+</service>
+
+</definitions>

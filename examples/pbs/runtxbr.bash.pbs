@@ -1,0 +1,32 @@
+#!/bin/bash
+
+#PBS -q batch 
+#PBS -N test 
+#PBS -l walltime=04:15:00
+#PBS -l nodes=2:ppn=2
+#PBS -V
+
+nodes=2
+ppn=2
+let n=$nodes*$ppn
+
+# --------- To change by the user ----------------
+
+basename = "fhv6a"
+directory = "$DATA_DIR/fhv6"
+limits = ""	# should be "-z zstart,ztop"
+
+# ------------------------------------------------
+
+txbr_align.py -b $basename -d $directory $limits
+
+mpdboot --totalnum=$nodes -f $PBS_NODEFILE
+
+mpirun -machinefile $PBS_NODEFILE -np $n txbr_filter.py -b $basename -d $directory --mpi
+
+txbr_filter.py -b $basename -d $directory --doClean --finalize-mpi $n
+
+mpirun -machinefile $PBS_NODEFILE -np $n txbr_bckprj.py -b $basename -d $directory --wd $directory $limits --mpi
+
+txbr_finalize_bckprj.py -n $n -b $basename -d $directory --wd $directory  $limits --doCombine --doClean
+

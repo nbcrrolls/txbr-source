@@ -1,0 +1,40 @@
+List of To Do's:
+
+- Fix txbr_bin.py if length is not a multiple of 2
+- Fix the combining C code (remove unuseful memcp)
+- Fix the backprojection C code
+- Check Matlab vs C indexing condition
+- pb with the rotation axis 
+- pb with starting from different .txbr file
+- trace angle only on the smaller tilts
+- Filtering angle sign
+- Stacked series and rotation axis
+- Make sure the number of tilts in rawtilt is the same as the number of images
+- Do a plotting for the angles in an orthogonal approximation
+- In contour alignement, contours for an extended cannot be empty->validation
+- Remove zzopencv dependencies
+- Need to hook-up the scaling evaluation
+- Fix the relax projection routine scheme in the case of the orthogonal approximation
+- Problem with contour alignment and n2=2
+- Problem initialization multiple series (with the sample transfer)
+- Check the number of blocks pb in the cases: back.2/  back.cu/  back.cu.2/
+
+Current
+- Fix the triton txbr_finalize.py bug. On a cluster, the starting directory is always the top
+directory on each node. Always use absolute path.
+
+Add-ons and Corrections:
+
+v3.0.4
+- Add magnification variables in the orthogonal multiple beam approximation for the alignment. Symmetric case assume the same magnification factor in both direction of the camera. This is the default option.
+
+v3.0.2
+- Make the interpolation mode of the flattening work on top of a polynomial approximation
+- Make the interpolation mode works on a fix size frame (X_INTERP,Y_INTERP) for performance
+- Make the runtxbr.py program stops if one of the step did not work properly (20-10-2009)
+- Ability to read the txbr.cfg file from the work directory (default value ".")
+
+v3.0.1
+- Make sure the reorientation of the specimen is done after "on the fly" flattening: the problem was elesewhere... Reorientation of the specimen is intrinsically done within the "on-the-fly" routine. There was a bad rawtilt files with a different numbers of angles compared to the preali file (19-10-2009).
+- Orthogonal approximation is broken: projection map coefficients were shifted, unfold_var2_with_scaling was not calling unfold_var2
+

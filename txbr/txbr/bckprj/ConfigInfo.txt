@@ -1,0 +1,3 @@
+IMOD_BASE_DIR = /usr/local/imod_4.5.8
+TXBR_BASE_DIR = /home/sphan/work/TxBR/TxBR
+CUDA_BASE_DIR = /usr/local/imod_4.5.8
