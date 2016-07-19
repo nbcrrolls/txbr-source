@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Installing base packages"
-yum install -y cmake git epel-release
+yum install -y cmake git epel-release tcsh
 yum install -y opencv opencv-devel mpich mpich-devel mpich-autoload qt qt-devel wget tcsh xauth xclock gcc-c++ mlocate time tree 
 yum install -y xorg-x11-fonts-*
 yum install -y mesa-*
@@ -36,7 +36,7 @@ swiginac="swiginac-1.0.0.tgz"
 wget https://pypi.python.org/packages/05/94/e339b91298bc06c1ab80d6572c0ffd94c0c1efcad4684f354dbaa32d0100/$swiginac
 tar -zxf $swiginac
 cd `echo $swiginac | sed "s/\.tgz//"`
-python setup.by build
+python setup.py build
 python setup.py install
 cd ..
 
