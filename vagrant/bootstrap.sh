@@ -2,7 +2,8 @@
 
 echo "Installing base packages"
 yum install -y cmake git epel-release tcsh
-yum install -y opencv opencv-devel mpich mpich-devel mpich-autoload qt qt-devel wget tcsh xauth xclock gcc-c++ mlocate time tree 
+yum install -y opencv opencv-devel opencv-python
+yum install -y mpich mpich-devel mpich-autoload qt qt-devel wget tcsh xauth xclock gcc-c++ mlocate time tree 
 yum install -y xorg-x11-fonts-*
 yum install -y mesa-*
 yum install -y python-pip python-wheel
@@ -14,6 +15,9 @@ yum install -y scipy python-matplotlib*
 yum install -y mpi4py-mpich
 yum install -y python-pillow*
 yum install -y swig*
+yum install -y python-psutil
+yum install -y sympy*
+yum install -y Perl-Data-Dumper
 updatedb
 
 pip install wheel
@@ -39,6 +43,13 @@ cd `echo $swiginac | sed "s/\.tgz//"`
 python setup.py build
 python setup.py install
 cd ..
+
+#install intel openmp too bad I also need intel compiler... :(
+#libomp="libomp_20160322_oss.tgz"
+#wget https://www.openmprtl.org/sites/default/files/$libomp
+#cd `echo $libomp | sed "s/\.tgz//"`
+#make compiler=gcc
+#cd ..
 
 
 # imod
