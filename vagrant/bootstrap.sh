@@ -22,6 +22,7 @@ updatedb
 
 pip install wheel
 pip install swiginac
+pip install Cycler
 
 # Download & install pyrex
 pyrex="Pyrex-0.9.9.tar.gz"
