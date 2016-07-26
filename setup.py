@@ -30,19 +30,19 @@ def numberOfGPUBoards():
 buildGPUCode = numberOfGPUBoards()!=0
 
 mrc = Extension( 'mrc.mrcfile',
-                  libraries = ['tiff', 'cfshr', 'iomp5', 'iimod', 'imod'],
+                  libraries = ['tiff', 'cfshr', 'gomp', 'iimod', 'imod'],
                   sources = [ 'txbr/mrc/mrcfile.c',
                               'txbr/mrc/txbrstack.c',
                               'txbr/util/util_C/txbrutil.c' ]
                  )
                  
 imodel = Extension( 'modl.modfile',
-                    libraries = [ 'tiff', 'cfshr', 'iomp5', 'iimod', 'imod' ],
+                    libraries = [ 'tiff', 'cfshr', 'gomp', 'iimod', 'imod' ],
                     sources = ['txbr/modl/modfile.c']
                  )
 
 filter = Extension( 'txbr.filter.filter',
-                    libraries = [ 'iimod', 'imod', 'cfshr', 'iomp5', 'txbrutil' ],
+                    libraries = [ 'iimod', 'imod', 'cfshr', 'gomp', 'txbrutil' ],
                     sources = [ 'txbr/txbr/filter/3D/filter.c',
                                 'txbr/txbr/filter/3D/filter_3D.c',
                                 'txbr/txbr/filter/3D/txbrtraj.c' ]
@@ -54,7 +54,7 @@ contres = Extension( "txbr.align.residualSupp",
                     )
 
 preconstruction = Extension( "txbr.prefil",
-                              libraries = [ 'iimod', 'imod', 'cfshr', 'iomp5',  'fftw3', 'fftw3f', 'opencv_core', 'opencv_features2d' ],
+                              libraries = [ 'iimod', 'imod', 'cfshr', 'gomp',  'fftw3', 'fftw3f', 'opencv_core', 'opencv_features2d' ],
                               sources = [ "txbr/txbr/filter/run_prefil.c",
                                           "txbr/txbr/filter/filter_1D.c",
                                           "txbr/txbr/filter/utilities.c",
@@ -64,7 +64,7 @@ preconstruction = Extension( "txbr.prefil",
                             )
 
 backprojection_0 = Extension( "txbr.bckprj",
-                              libraries = [ 'iimod', 'imod', 'cfshr', 'iomp5' ],
+                              libraries = [ 'iimod', 'imod', 'cfshr', 'gomp' ],
                               sources = [ 'txbr/txbr/bckprj/run_bckprj.c',
                                           'txbr/txbr/bckprj/back.0/backprojection.0.c',
                                           'txbr/util/util_C/txbrutil.c',
@@ -74,7 +74,7 @@ backprojection_0 = Extension( "txbr.bckprj",
                             )
 
 backprojection_1 = Extension( "txbr.bckprj",
-                              libraries = [ 'iimod', 'imod', 'cfshr', 'iomp5' ],
+                              libraries = [ 'iimod', 'imod', 'cfshr', 'gomp' ],
                               sources = [ 'txbr/txbr/bckprj/run_bckprj.c',
                                           'txbr/txbr/bckprj/back.f/backprojection.f.c',
                                           'txbr/util/util_C/txbrutil.c',
@@ -84,7 +84,7 @@ backprojection_1 = Extension( "txbr.bckprj",
                             )
 
 backprojection_2 = Extension( "txbr.bckprj",
-                               libraries = [ 'iimod', 'imod', 'cfshr', 'iomp5'],
+                               libraries = [ 'iimod', 'imod', 'cfshr', 'gomp'],
                                sources = [ 'txbr/txbr/bckprj/run_bckprj.c',
                                            'txbr/txbr/bckprj/back.2/backprojection.2.c',
                                            'txbr/txbr/bckprj/back.2/calculateBox.c',
@@ -97,7 +97,7 @@ backprojection_2 = Extension( "txbr.bckprj",
                             )
 
 backprojection_cu2 = Extension( "txbr.bckprj_cu",
-                                 libraries = [ 'iimod', 'imod', 'cfshr', 'iomp5','cudart'],
+                                 libraries = [ 'iimod', 'imod', 'cfshr', 'gomp','cudart'],
                                  sources = [ 'txbr/txbr/bckprj/run_bckprj_cuda.c',
                                              'txbr/txbr/bckprj/back.cu.2/backprojection.2.c',
                                              'txbr/txbr/bckprj/back.cu.2/calculateBox.c',
@@ -108,7 +108,7 @@ backprojection_cu2 = Extension( "txbr.bckprj_cu",
                             )
 
 combine = Extension( "txbr.combine",
-                     libraries = [ 'iimod', 'imod', 'cfshr', 'iomp5' ],
+                     libraries = [ 'iimod', 'imod', 'cfshr', 'gomp' ],
                      sources = [ 'txbr/txbr/join/combine.c',
                                  'txbr/txbr/join/merge.c',
                                  'txbr/txbr/join/crossval.c',
