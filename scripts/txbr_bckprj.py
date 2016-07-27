@@ -231,7 +231,7 @@ def run_backprojection( project, z, skip, use_fixed_segment_size, split_series, 
     x = keywords["x"]
     y = keywords["y"]
 #    z = keywords["z"]
-
+    keywords["z"] = z # added to make this work
     for series in series2process:
 
         projection = series.projection
