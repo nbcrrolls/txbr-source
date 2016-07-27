@@ -21,7 +21,6 @@ yum install -y Perl-Data-Dumper
 updatedb
 
 pip install wheel
-pip install swiginac
 pip install Cycler
 
 # Download & install pyrex
@@ -37,21 +36,16 @@ python setup.py install
 cd ..
 
 # Download & attempt to install swiginac
-swiginac="swiginac-1.0.0.tgz"
-wget https://pypi.python.org/packages/05/94/e339b91298bc06c1ab80d6572c0ffd94c0c1efcad4684f354dbaa32d0100/$swiginac
+swiginac="swiginac_1.5.1.orig.tar.gz"
+wget https://launchpad.net/ubuntu/+archive/primary/+files/$swiginac
 tar -zxf $swiginac
-cd `echo $swiginac | sed "s/\.tgz//"`
+
+# yes whoever made the above tarball named the directory differently
+# then the tar file and switched _ with -
+cd `echo "swiginac-1.5.1" | sed "s/\.tar.gz//"`
 python setup.py build
 python setup.py install
 cd ..
-
-#install intel openmp too bad I also need intel compiler... :(
-#libomp="libomp_20160322_oss.tgz"
-#wget https://www.openmprtl.org/sites/default/files/$libomp
-#cd `echo $libomp | sed "s/\.tgz//"`
-#make compiler=gcc
-#cd ..
-
 
 # imod
 imodfile="imod_4.7.15_RHEL6-64_CUDA6.0.csh"
@@ -65,6 +59,8 @@ chmod a+x $imodfile
 
 . /etc/profile.d/modules.sh
 . /etc/profile.d/mpich-x86_64.sh
+
+cp /vagrant/vagrant.setup.cfg /vagrant/txbr/setup.cfg
 
 echo ""
 echo "Installation complete..."
