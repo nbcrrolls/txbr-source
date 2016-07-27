@@ -3,25 +3,20 @@
 echo "Installing base packages"
 yum install -y cmake git epel-release tcsh
 yum install -y opencv opencv-devel opencv-python
-yum install -y mpich mpich-devel mpich-autoload qt qt-devel wget tcsh xauth xclock gcc-c++ mlocate time tree 
-yum install -y xorg-x11-fonts-*
-yum install -y mesa-*
+yum install -y qt qt-devel wget tcsh xauth xclock gcc-c++ mlocate time tree 
+yum install -y xorg-x11-fonts-* mesa-*
 yum install -y python-pip python-wheel
 yum install -y python-setuptools python-setuptools-devel
 yum install -y cln cln-devel ginac ginac-utils ginac-devel
 yum install -y libtiff libtiff-devel fftw-*
-yum install -y numpy numpy-f2py
-yum install -y scipy python-matplotlib*
-yum install -y mpi4py-mpich
-yum install -y python-pillow*
-yum install -y swig*
-yum install -y python-psutil
-yum install -y sympy*
-yum install -y Perl-Data-Dumper
+yum install -y numpy numpy-f2py scipy python-matplotlib*
+yum install -y mpi4py-openmpi python-pillow* PackageKit-gtk3-module libcanberra-gtk3
+yum install -y swig* python-psutil sympy* Perl-Data-Dumpe openmpi openmpi-devel
 updatedb
 
 pip install wheel
 pip install Cycler
+pip install mpi4py
 
 # Download & install pyrex
 pyrex="Pyrex-0.9.9.tar.gz"
@@ -58,7 +53,6 @@ chmod a+x $imodfile
 /bin/rm -f $imodfile
 
 . /etc/profile.d/modules.sh
-. /etc/profile.d/mpich-x86_64.sh
 
 cp /vagrant/vagrant.setup.cfg /vagrant/txbr/setup.cfg
 
