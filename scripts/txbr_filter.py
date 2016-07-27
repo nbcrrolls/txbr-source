@@ -86,7 +86,7 @@ def __run_mpi_filter__( project, no_remap, filter_magnification, reset=False):
             src = os.path.join(series.stack.data_dir, base)
         elif series.input=='preali':
             base = series.basename + '.preali'
-            src = os.path.join(project.align_directory, base)
+            src = os.path.join(series.stack.data_dir, base)
 
         for islice in range(sec_start,sec_stop+1):
             
@@ -98,7 +98,7 @@ def __run_mpi_filter__( project, no_remap, filter_magnification, reset=False):
             if no_remap:
                 txbr.prefil.rot_filter( input, output, filter_magnification, angle )
             else:
-                remap_file = os.path.join(wd, serie.basename + '.remap')
+                remap_file = os.path.join(wd, series.basename + '.remap')
                 txbr.prefil.remap_filter(input, output, *txbr.filter.load2DRemap(remap_file))
 
             os.remove(input) # No need to keep that input file anymore
