@@ -11,7 +11,7 @@ yum install -y cln cln-devel ginac ginac-utils ginac-devel
 yum install -y libtiff libtiff-devel fftw-*
 yum install -y numpy numpy-f2py scipy python-matplotlib*
 yum install -y mpi4py-openmpi python-pillow* PackageKit-gtk3-module libcanberra-gtk3
-yum install -y swig* python-psutil sympy* Perl-Data-Dumpe openmpi openmpi-devel
+yum install -y swig* python-psutil sympy* Perl-Data-Dumper openmpi openmpi-devel
 updatedb
 
 pip install wheel
