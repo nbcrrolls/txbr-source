@@ -1,0 +1,42 @@
+
+RELEASE=7
+d3rversion="$1"
+
+echo "Setting RELEASE=$RELEASE"
+echo "D3R release version=$d3rversion"
+
+DistType "redhat"
+MirrorURL "http://mirror.centos.org/centos-${RELEASE}/${RELEASE}/os/\$basearch/"
+
+Setup
+Bootstrap
+
+InstallPkgs yum vim-minimal make python python-devel git wget tar
+InstallPkgs cmake epel-release tcsh
+
+InstallPkgs opencv opencv-devel opencv-python file
+InstallPkgs qt qt-devel wget tcsh xauth xclock gcc-c++ mlocate time tree
+InstallPkgs xorg-x11-fonts-* mesa-*
+InstallPkgs python-pip python-wheel
+InstallPkgs python-setuptools python-setuptools-devel
+InstallPkgs cln cln-devel ginac ginac-utils ginac-devel
+InstallPkgs libtiff libtiff-devel fftw-*
+InstallPkgs numpy numpy-f2py scipy python-matplotlib*
+InstallPkgs mpi4py-openmpi python-pillow* PackageKit-gtk3-module libcanberra-gtk3
+InstallPkgs swig* python-psutil sympy* Perl-Data-Dumper openmpi openmpi-devel
+
+
+RunCmd "pip install wheel"
+RunCmd "pip install Cycler"
+RunCmd "pip install mpi4py"
+RunCmd "pip install flake8"
+
+InstallFile singularity/runscript.sh /singularity
+RunCmd "chmod a+x /singularity"
+
+RunCmd "cd /;wget https://launchpad.net/ubuntu/+archive/primary/+files/swiginac_1.5.1.orig.tar.gz;tar -zxf swiginac_1.5.1.orig.tar.gz;cd swiginac-1.5.1;python setup.py;python setup.py install;cd .."
+
+RunCmd "cd /;wget http://bio3d.colorado.edu/imod/AMD64-RHEL5/imod_4.7.15_RHEL6-64_CUDA6.0.csh;chmod a+x imod_4.7.15_RHEL6-64_CUDA6.0.csh;./imod_4.7.15_RHEL6-64_CUDA6.0.csh -yes"
+
+Cleanup
+
