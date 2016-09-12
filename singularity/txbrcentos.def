@@ -20,17 +20,15 @@ InstallPkgs xorg-x11-fonts-* mesa-*
 InstallPkgs python-pip python-wheel python-configobj
 InstallPkgs python-setuptools python-setuptools-devel
 InstallPkgs cln cln-devel ginac ginac-utils ginac-devel
-InstallPkgs libtiff libtiff-devel fftw-*
+InstallPkgs libtiff libtiff-devel fftw-* 
 InstallPkgs numpy numpy-f2py scipy python-matplotlib*
-InstallPkgs mpi4py-openmpi python-pillow* PackageKit-gtk3-module libcanberra-gtk3
+InstallPkgs mpi4py-openmpi mpi4py-mpich python-pillow* PackageKit-gtk3-module libcanberra-gtk2 libcanberra-gtk3 libcanberra-devel
 InstallPkgs swig* python-psutil sympy* Perl-Data-Dumper openmpi openmpi-devel
 
 RunCmd "updatedb"
 
 RunCmd "pip install wheel"
 RunCmd "pip install Cycler"
-# probably not needed cause mpi4py-openmpi is installed above
-# RunCmd ". /etc/profile.d/modules.sh;module load mpi/openmpi-x86_64;pip install mpi4py"
 
 RunCmd "cd /;wget http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/Pyrex-0.9.9.tar.gz;tar -zxf Pyrex-0.9.9.tar.gz;cd /Pyrex-0.9.9;python setup.py build;python setup.py install;cd /"
 
