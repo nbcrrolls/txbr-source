@@ -1,9 +1,9 @@
 
 RELEASE=7
-d3rversion="$1"
+txbrversion="$1"
 
 echo "Setting RELEASE=$RELEASE"
-echo "D3R release version=$d3rversion"
+echo "TXBR release version=$txbrversion"
 
 DistType "redhat"
 MirrorURL "http://mirror.centos.org/centos-${RELEASE}/${RELEASE}/os/\$basearch/"
@@ -17,7 +17,7 @@ InstallPkgs cmake epel-release tcsh
 InstallPkgs opencv opencv-devel opencv-python file
 InstallPkgs qt qt-devel wget tcsh xauth xclock gcc-c++ mlocate time tree
 InstallPkgs xorg-x11-fonts-* mesa-*
-InstallPkgs python-pip python-wheel
+InstallPkgs python-pip python-wheel python-configobj
 InstallPkgs python-setuptools python-setuptools-devel
 InstallPkgs cln cln-devel ginac ginac-utils ginac-devel
 InstallPkgs libtiff libtiff-devel fftw-*
@@ -25,18 +25,32 @@ InstallPkgs numpy numpy-f2py scipy python-matplotlib*
 InstallPkgs mpi4py-openmpi python-pillow* PackageKit-gtk3-module libcanberra-gtk3
 InstallPkgs swig* python-psutil sympy* Perl-Data-Dumper openmpi openmpi-devel
 
+RunCmd "updatedb"
 
 RunCmd "pip install wheel"
 RunCmd "pip install Cycler"
-RunCmd "pip install mpi4py"
-RunCmd "pip install flake8"
+# probably not needed cause mpi4py-openmpi is installed above
+# RunCmd ". /etc/profile.d/modules.sh;module load mpi/openmpi-x86_64;pip install mpi4py"
+
+RunCmd "cd /;wget http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/Pyrex-0.9.9.tar.gz;tar -zxf Pyrex-0.9.9.tar.gz;cd /Pyrex-0.9.9;python setup.py build;python setup.py install;cd /"
 
 InstallFile singularity/runscript.sh /singularity
+
+RunCmd "mkdir /txbr-source"
+InstallFile dist/txbr.tar /txbr-source/.
+RunCmd "cd /txbr-source;tar -xf txbr.tar"
+RunCmd "rm /txbr-source/txbr.tar"
+
 RunCmd "chmod a+x /singularity"
 
-RunCmd "cd /;wget https://launchpad.net/ubuntu/+archive/primary/+files/swiginac_1.5.1.orig.tar.gz;tar -zxf swiginac_1.5.1.orig.tar.gz;cd swiginac-1.5.1;python setup.py;python setup.py install;cd .."
+RunCmd "cd /;wget https://launchpad.net/ubuntu/+archive/primary/+files/swiginac_1.5.1.orig.tar.gz;tar -zxf swiginac_1.5.1.orig.tar.gz;cd swiginac-1.5.1;python setup.py build;python setup.py install;cd .."
 
 RunCmd "cd /;wget http://bio3d.colorado.edu/imod/AMD64-RHEL5/imod_4.7.15_RHEL6-64_CUDA6.0.csh;chmod a+x imod_4.7.15_RHEL6-64_CUDA6.0.csh;./imod_4.7.15_RHEL6-64_CUDA6.0.csh -yes"
+
+InstallFile singularity/txbr.setup.cfg /txbr-source/setup.cfg
+
+# build and install txbr
+RunCmd "cd /txbr-source;. /etc/profile.d/modules.sh;module load mpi/openmpi-x86_64;export LD_LIBRARY_PATH=/lib64:/usr/lib64/mpich/lib:/usr/local/IMOD/lib:/usr/local/IMOD/qtlib;python setup.py build; python setup.py install"
 
 Cleanup
 
