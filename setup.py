@@ -1,7 +1,11 @@
 import os
 import sys
 
-from distutils.core import setup, Extension
+try:
+    from setuptools import setup, Extension
+except ImportError:
+    from distutils.core import setup, Extension
+
 from Pyrex.Distutils import build_ext
 
 
