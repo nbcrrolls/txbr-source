@@ -5,7 +5,7 @@ yum install -y cmake git epel-release tcsh
 yum install -y opencv opencv-devel opencv-python
 yum install -y qt qt-devel wget tcsh xauth xclock gcc-c++ mlocate time tree 
 yum install -y xorg-x11-fonts-* mesa-*
-yum install -y python-pip python-wheel
+yum install -y python-pip python-wheel unzip
 yum install -y python-setuptools python-setuptools-devel
 yum install -y cln cln-devel ginac ginac-utils ginac-devel
 yum install -y libtiff libtiff-devel fftw-*
@@ -54,7 +54,8 @@ chmod a+x $imodfile
 
 . /etc/profile.d/modules.sh
 
-cp /vagrant/vagrant.setup.cfg /vagrant/txbr/setup.cfg
+echo "module load mpi/openmpi-x86_64" >> /home/vagrant/.bash_profile
+echo "export LD_LIBRARY_PATH=/lib64:/usr/lib64/mpich/lib:/usr/local/IMOD/lib:/usr/local/IMOD/qtlib" >> /home/vagrant/.bash_profile
 
 echo ""
 echo "Installation complete..."
