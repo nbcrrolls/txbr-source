@@ -29,10 +29,10 @@ clean-test:
 
 singularity:
 	@echo 'Creating Singularity image'
+	mkdir dist
 	rm -f dist/*.img
 	tar -c * > dist/txbr.tar
 	vers=`cat VERSION | sed "s/\n//g"`; \
-	mkdir dist; \
 	echo 'version $vers'; \
 	imgfile=`echo dist/txbr-$$vers.img` ; \
 	whfile=`echo d3r-$$vers-py2.py3-none-any.whl` ; \
