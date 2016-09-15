@@ -50,5 +50,13 @@ InstallFile singularity/txbr.setup.cfg /txbr-source/setup.cfg
 # build and install txbr
 RunCmd "cd /txbr-source;. /etc/profile.d/modules.sh;module load mpi/openmpi-x86_64;export LD_LIBRARY_PATH=/lib64:/usr/lib64/mpich/lib:/usr/local/IMOD/lib:/usr/local/IMOD/qtlib;python setup.py build; python setup.py install"
 
+# Hack to switch matplotlib to use Agg instead of GTKAgg
+RunCmd "sed -i 's/GTKAgg/Agg/g' /usr/lib64/python2.7/site-packages/matplotlib/mpl-data/matplotlibrc"
+
+# Made directories used on Gordon & Comet
+RunCmd "mkdir /oasis"
+RunCmd "mkdir /projects"
+
+
 Cleanup
 
