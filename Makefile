@@ -29,8 +29,8 @@ clean-test:
 
 singularity:
 	@echo 'Creating Singularity image'
-	mkdir dist
-	rm -f dist/*.img
+	mkdir -p dist
+	sudo rm -f dist/*.img
 	tar -c * > dist/txbr.tar
 	vers=`cat VERSION | sed "s/\n//g"`; \
 	echo 'version $vers'; \
