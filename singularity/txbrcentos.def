@@ -53,9 +53,10 @@ RunCmd "cd /txbr-source;. /etc/profile.d/modules.sh;module load mpi/openmpi-x86_
 # Hack to switch matplotlib to use Agg instead of GTKAgg
 RunCmd "sed -i 's/GTKAgg/Agg/g' /usr/lib64/python2.7/site-packages/matplotlib/mpl-data/matplotlibrc"
 
-# Made directories used on Gordon & Comet
+# Make directories used on Gordon, Comet, & Rocce
 RunCmd "mkdir /oasis"
 RunCmd "mkdir /projects"
+RunCmd "mkdir /data"
 
 
 Cleanup
