@@ -15,3 +15,8 @@ A series of options are available for the different TxBR scripts. Type
 for a list of the options available to the runtxbr script. In particular, to start taking into account of the electron beam curvilinearity, you can set the n2 flag to an integer value higher than 1 (default value for a projective model); in practice, do not set a value larger than 6 for n2.
 
 You can find a test dataset in the examples/data folder of the TxBR directory. Files needed to reconstruct a dual tilt series with TxBR are included in the tar file fhv6.tar.gz.
+
+# License
+
+See license in this file: [LICENSE.txt](LICENSE.txt)
+
