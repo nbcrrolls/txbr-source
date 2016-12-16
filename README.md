@@ -1,6 +1,9 @@
 [imod]: http://bio3d.colorado.edu/imod/
 [etomo]: http://bio3d.colorado.edu/imod/doc/etomoTutorial.html
 [fhv6]: https://github.com/nbcrrolls/txbr-source/blob/master/examples/data/fhv6.tar.gz
+[singularity]: http://singularity.lbl.gov/
+[centos][https://www.centos.org/]
+[python][http://www.python.org/]
 
 # Transform based Tracking, Bundle adjustment and Reconstruction (TxBR)
 
@@ -8,13 +11,67 @@ Transform based Tracking, Bundle adjustment and Reconstruction (**TxBR**) is an 
 
 ### Compatibility
 
-* Works with Python 2.6, 2.7 on Linux environments
+* Works with [Python 2.6/2.7][python] on [Centos 6/7][centos]
 
 ### Dependencies
 
-Simply put, a lot of software is needed to get this working. 
+Simply put, a lot of software is needed to get this working. Below is a list of the software needed, but it is highly recommended that either the Virtual machine route or the [Singularity][singularity] route be used to use **TxBR** Both of these approaches are described in the [Installation](#Installation) section below.
+
+* [IMOD][imod] should be installed in default location (/usr/local/IMOD)
+* [opencv][http://opencv.org/] with development packages and python
+* [Qt][https://www.qt.io] with development packages
+* [Python 2.6/2.7][https://www.python.org/] with development libraries
+* [cln][http://www.ginac.de/CLN/] with development libraries
+* [ginac][http://www.ginac.de] with utilities and development libraries
+* [libtiff library][http://www.libtiff.org/]
+* [numpy][http://www.numpy.org/]
+* [scipy][https://www.scipy.org/]
+* [python-matplotlib][http://matplotlib.org/]
+* mpi4py-openmpi
+* mpi4py-mpich
+* [python-pillow][https://python-pillow.org/]
+* canberra gtk3 library
+* [swig]
+* Cycler
+* Pyrex 
+* [swiginac][https://launchpad.net/ubuntu/+archive/primary/+files/swiginac_1.5.1.orig.tar.gz]
+* gcc/g++
 
 
+### Installation
+
+[To simply try TxBR out follow these instructions][https://github.com/nbcrrolls/txbr-source/wiki/Using-TXBR-Vagrant-Virtual-machine]
+
+**OR**
+ 
+To build a [Singularity][singularity] image of TxBR do the following, assuming [Singularity][singularity] is installed:
+
+```Bash
+git clone https://github.com/nbcrrolls/txbr-source.git
+cd txbr-source
+make singularity
+dist/txbr-v3.1.2-dev.img --help
+```
+
+
+ 
+
+Assuming all dependencies have been installed then the following should work on Centos 7:
+
+```Bash
+git clone https://github.com/nbcrrolls/txbr-source.git
+cd txbr-source
+. /etc/profile.d/modules.sh
+module load mpi/openmpi-x86_64
+export LD_LIBRARY_PATH=/lib64:/usr/lib64/mpich/lib:/usr/local/IMOD/lib:/usr/local/IMOD/qtlib
+python setup.py build
+sudo python setup.py install
+```
+
+
+
+
+### Usage
 
 As a starting point for reconstructing volumes, three files need to be provided for each series: preali files, rawtlt files and fid files (cf [IMOD][imod]). For instance, if we have two series called basenamea and basenameb, a total of six files should be accessible to the **TxBR** calculations: basenamea.preali, basenamea.fid, basenamea.rawtlt, basenamea.preali, basenamea.fid and basenamea.rawtlt.
 

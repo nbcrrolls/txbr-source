@@ -34,7 +34,7 @@ singularity:
 	tar -c * > dist/txbr.tar
 	vers=`cat VERSION | sed "s/\n//g"`; \
 	echo 'version $vers'; \
-	imgfile=`echo dist/txbr-$$vers.img` ; \
+	imgfile=`echo dist/txbr.img` ; \
 	whfile=`echo d3r-$$vers-py2.py3-none-any.whl` ; \
 	echo 'image file $imgfile' ; \
 	sudo singularity create -s 10000 $$imgfile ; \
