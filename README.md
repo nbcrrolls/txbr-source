@@ -2,8 +2,8 @@
 [etomo]: http://bio3d.colorado.edu/imod/doc/etomoTutorial.html
 [fhv6]: https://github.com/nbcrrolls/txbr-source/blob/master/examples/data/fhv6.tar.gz
 [singularity]: http://singularity.lbl.gov/
-[centos][https://www.centos.org/]
-[python][http://www.python.org/]
+[centos]: https://www.centos.org/
+[python]: http://www.python.org/
 
 # Transform based Tracking, Bundle adjustment and Reconstruction (TxBR)
 
