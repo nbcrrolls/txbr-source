@@ -15,7 +15,7 @@ Transform based Tracking, Bundle adjustment and Reconstruction (**TxBR**) is an 
 
 ### Dependencies
 
-Simply put, a lot of software is needed to get this working. Below is a list of the software needed, but it is highly recommended that either the Virtual machine route or the [Singularity][singularity] route be used to use **TxBR** Both of these approaches are described in the [Installation](#Installation) section below.
+Simply put, a lot of software is needed to get this working. Below is a list of the software needed, but it is highly recommended that either the Virtual machine route or the [Singularity][singularity] route be used to use **TxBR** Both of these approaches are described in the [Installation](txbr-source#installation) section below.
 
 * [IMOD][imod] should be installed in default location (/usr/local/IMOD)
 * [opencv][http://opencv.org/] with development packages and python
@@ -40,7 +40,7 @@ Simply put, a lot of software is needed to get this working. Below is a list of 
 
 ### Installation
 
-[To simply try TxBR out follow these instructions][https://github.com/nbcrrolls/txbr-source/wiki/Using-TXBR-Vagrant-Virtual-machine]
+[To simply try TxBR out follow these instructions](https://github.com/nbcrrolls/txbr-source/wiki/Using-TXBR-Vagrant-Virtual-machine)
 
 **OR**
  
