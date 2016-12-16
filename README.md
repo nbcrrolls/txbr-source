@@ -19,8 +19,8 @@ Simply put, a lot of software is needed to get this working. Below is a list of 
 
 * [IMOD][imod] should be installed in default location (/usr/local/IMOD)
 * [opencv](http://opencv.org/) with development packages and python
-* [Qt][https://www.qt.io) with development packages
-* [Python 2.6/2.7](https://www.python.org/) with development libraries
+* [Qt](https://www.qt.io) with development packages
+* [Python 2.6/2.7][python] with development libraries
 * [cln](http://www.ginac.de/CLN/) with development libraries
 * [ginac](http://www.ginac.de) with utilities and development libraries
 * [libtiff library](http://www.libtiff.org/)
