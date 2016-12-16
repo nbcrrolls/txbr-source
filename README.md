@@ -54,9 +54,9 @@ dist/txbr-v3.1.2-dev.img --help
 ```
 
 
- 
+**OR** 
 
-Assuming all dependencies have been installed then the following should work on Centos 7:
+Assuming all dependencies have been installed and **setup.cfg** paths are correct, then the following should work on Centos 7:
 
 ```Bash
 git clone https://github.com/nbcrrolls/txbr-source.git
@@ -67,9 +67,6 @@ export LD_LIBRARY_PATH=/lib64:/usr/lib64/mpich/lib:/usr/local/IMOD/lib:/usr/loca
 python setup.py build
 sudo python setup.py install
 ```
-
-
-
 
 ### Usage
 
