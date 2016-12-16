@@ -18,23 +18,23 @@ Transform based Tracking, Bundle adjustment and Reconstruction (**TxBR**) is an 
 Simply put, a lot of software is needed to get this working. Below is a list of the software needed, but it is highly recommended that either the Virtual machine route or the [Singularity][singularity] route be used to use **TxBR** Both of these approaches are described in the [Installation](txbr-source#installation) section below.
 
 * [IMOD][imod] should be installed in default location (/usr/local/IMOD)
-* [opencv][http://opencv.org/] with development packages and python
-* [Qt][https://www.qt.io] with development packages
-* [Python 2.6/2.7][https://www.python.org/] with development libraries
-* [cln][http://www.ginac.de/CLN/] with development libraries
-* [ginac][http://www.ginac.de] with utilities and development libraries
-* [libtiff library][http://www.libtiff.org/]
-* [numpy][http://www.numpy.org/]
-* [scipy][https://www.scipy.org/]
-* [python-matplotlib][http://matplotlib.org/]
+* [opencv](http://opencv.org/) with development packages and python
+* [Qt][https://www.qt.io) with development packages
+* [Python 2.6/2.7](https://www.python.org/) with development libraries
+* [cln](http://www.ginac.de/CLN/) with development libraries
+* [ginac](http://www.ginac.de) with utilities and development libraries
+* [libtiff library](http://www.libtiff.org/)
+* [numpy](http://www.numpy.org/)
+* [scipy](https://www.scipy.org/)
+* [python-matplotlib](http://matplotlib.org/)
 * mpi4py-openmpi
 * mpi4py-mpich
-* [python-pillow][https://python-pillow.org/]
+* [python-pillow](https://python-pillow.org/)
 * canberra gtk3 library
-* [swig]
+* swig
 * Cycler
 * Pyrex 
-* [swiginac][https://launchpad.net/ubuntu/+archive/primary/+files/swiginac_1.5.1.orig.tar.gz]
+* [swiginac](https://launchpad.net/ubuntu/+archive/primary/+files/swiginac_1.5.1.orig.tar.gz)
 * gcc/g++
 
 
