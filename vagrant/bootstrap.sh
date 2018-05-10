@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Installing base packages"
+yum -y update
 yum install -y cmake git epel-release tcsh
 yum install -y opencv opencv-devel opencv-python
 yum install -y qt qt-devel wget tcsh xauth xclock gcc-c++ mlocate time tree 
