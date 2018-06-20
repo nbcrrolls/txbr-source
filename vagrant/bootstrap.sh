@@ -2,22 +2,22 @@
 
 echo "Installing base packages"
 yum -y update
-yum install -y cmake git epel-release tcsh
+yum install -y vim-minimal make python python-devel git wget tar
+yum install -y cmake epel-release tcsh
 yum install -y opencv opencv-devel opencv-python
 yum install -y qt qt-devel wget tcsh xauth xclock gcc-c++ mlocate time tree 
 yum install -y xorg-x11-fonts-* mesa-*
-yum install -y python-pip python-wheel unzip
+yum install -y python-pip python-wheel python-configobj unzip
 yum install -y python-setuptools python-setuptools-devel
 yum install -y cln cln-devel ginac ginac-utils ginac-devel
 yum install -y libtiff libtiff-devel fftw-*
 yum install -y numpy numpy-f2py scipy python-matplotlib*
-yum install -y mpi4py-openmpi python-pillow* PackageKit-gtk3-module libcanberra-gtk2 libcanberra-gtk3
+yum install -y mpi4py-openmpi python-pillow* PackageKit-gtk3-module libcanberra-gtk2 libcanberra-gtk3 libcanberra-devel
 yum install -y swig* python-psutil sympy* Perl-Data-Dumper openmpi openmpi-devel
 updatedb
 
 pip install wheel
 pip install Cycler
-pip install mpi4py
 
 # Download & install pyrex
 pyrex="Pyrex-0.9.9.tar.gz"
