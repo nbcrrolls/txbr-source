@@ -1,0 +1,261 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "AWS CloudFormation TxBR template. Creates an EC2 centos7 instance off of a base Centos 7 image. This template provides ssh access to the machine created. **WARNING** This template creates an Amazon EC2 instance. You will be billed for the AWS resources used if you create a stack from this template.",
+    "Parameters": {
+        "KeyName": {
+            "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instance",
+            "Type": "AWS::EC2::KeyPair::KeyName",
+            "ConstraintDescription": "must be the name of an existing EC2 KeyPair."
+        },
+        "InstanceType": {
+            "Description": "EC2 instance type",
+            "Type": "String",
+            "Default": "m5.xlarge",
+            "AllowedValues": [
+                "t2.2xlarge",
+                "m5.large",
+                "m5.xlarge",
+                "m5.4xlarge",
+                "c5.xlarge",
+                "c5.9xlarge",
+                "c5.18xlarge"
+            ],
+            "ConstraintDescription": "must be a valid EC2 instance type."
+        },
+        "DiskSize": {
+            "Description": "Size of EC2 instance disk in gigabytes",
+            "Type": "Number",
+            "Default": "100",
+            "MinValue": "50",
+            "ConstraintDescription": "must be a whole number 50 or larger"
+        },
+        "AccessLocation": {
+            "Description": "The IP address range that can be used to SSH and visit HTTP on EC2 instance",
+            "Type": "String",
+            "MinLength": "9",
+            "MaxLength": "18",
+            "Default": "0.0.0.0/0",
+            "AllowedPattern": "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
+            "ConstraintDescription": "must be a valid IP CIDR range of the form x.x.x.x/x."
+        }
+	
+    },
+    "Mappings" : {
+       "RegionMap" : {
+           "ap-south-1"   : {"AMI" : "ami-1780a878"},
+           "eu-west-3"   : {"AMI" : "ami-262e9f5b"},
+           "eu-west-2"   : {"AMI" : "ami-00846a67"},
+           "eu-west-1"   : {"AMI" : "ami-3548444c"},
+           "ap-northeast-2"   : {"AMI" : "ami-bf9c36d1"},
+           "ap-northeast-1"   : {"AMI" : "ami-8e8847f1"},
+           "sa-east-1"   : {"AMI" : "ami-cb5803a7"},
+           "ca-central-1"   : {"AMI" : "ami-e802818c"},
+           "ap-southeast-1"   : {"AMI" : "ami-8e0205f2"},
+           "ap-southeast-2"   : {"AMI" : "ami-d8c21dba"},
+           "eu-central-1"   : {"AMI" : "ami-dd3c0f36"},
+           "us-east-1"   : {"AMI" : "ami-9887c6e7"},
+           "us-east-2"   : {"AMI" : "ami-9c0638f9"},
+           "us-west-1"   : {"AMI" : "ami-4826c22b"},
+           "us-west-2"   : {"AMI" : "ami-3ecc8f46"}            
+       }       
+    },
+    "Resources": {
+        "TXBRInstance": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "InstanceType": {
+                    "Ref": "InstanceType"
+                },
+                "SecurityGroups": [
+                    {
+                        "Ref": "InstanceSecurityGroup"
+                    }
+                ],
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "ImageId": {
+                    "Fn::FindInMap": [ "RegionMap",
+                        { "Ref": "AWS::Region" }, "AMI" ]
+                    
+                },
+                "BlockDeviceMappings" : [
+                    {
+                      "DeviceName" : "/dev/sda1",
+                      "Ebs" : { 
+                                 "VolumeSize" : { "Ref": "DiskSize" },
+                                 "VolumeType" : "gp2"
+                              }
+                    }
+                ],
+                "Tags" : [ 
+                    {
+                      "Key" : "Name", "Value" : { "Ref": "AWS::StackName" } 
+                    }
+                ],
+                "UserData"    : { "Fn::Base64" : { "Fn::Join" : [ "", [
+                     "#!/bin/bash\n\n",
+                     "echo 'Installing dependencies'\n",
+                     "yum -y update\n",
+                     "yum install -y vim-minimal make python python-devel git wget tar\n",
+                     "yum install -y cmake epel-release tcsh\n",
+                     "yum install -y opencv opencv-devel opencv-python\n",
+                     "yum install -y qt qt-devel wget tcsh xauth xclock gcc-c++ mlocate time tree\n",
+                     "yum install -y xorg-x11-fonts-* mesa-*\n",
+                     "yum install -y python-pip python-wheel python-configobj unzip\n",
+                     "yum install -y python-setuptools python-setuptools-devel\n",
+                     "yum install -y cln cln-devel ginac ginac-utils ginac-devel\n",
+                     "yum install -y libtiff libtiff-devel fftw-*\n",
+                     "yum install -y numpy numpy-f2py scipy python-matplotlib*\n",
+                     "yum install -y mpi4py-openmpi python-pillow* PackageKit-gtk3-module libcanberra-gtk2 libcanberra-gtk3 libcanberra-devel\n",
+                     "yum install -y swig* python-psutil sympy* Perl-Data-Dumper openmpi openmpi-devel\n",                     
+                     "updatedb\n",
+
+                     "echo 'Done installing dependencies'\n",
+                     "pip install wheel\n",
+                     "pip install Cycler\n",
+                     "pip install https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz\n",
+                     "pyrex='Pyrex-0.9.9.tar.gz'\n",
+                     "echo 'Installing pyrex'\n",
+                     "cd /home/centos\n",
+                     "sudo -u centos wget http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/$pyrex\n",
+                     "tar -zxf $pyrex\n",
+                     "cd `echo $pyrex | sed 's/.tar.gz.*//'`\n",
+                     "sudo -u centos python setup.py build\n",
+                     "python setup.py install\n",
+                     "swiginac='swiginac_1.5.1.orig.tar.gz'\n",
+                     "cd /home/centos\n",
+                     "sudo -u centos wget https://launchpad.net/ubuntu/+archive/primary/+files/$swiginac\n",
+                     "tar -zxf $swiginac\n",
+                     "cd `echo 'swiginac-1.5.1' | sed 's/.tar.gz//'`\n",
+                     "sudo -u centos python setup.py build\n",
+                     "python setup.py install\n",
+                     "cd /home/centos\n",
+                     "imodfile='imod_4.7.15_RHEL6-64_CUDA6.0.csh'\n",
+                     "echo 'Imod installation downloading $imodfile\n",
+                     "sudo -u centos wget http://bio3d.colorado.edu/imod/AMD64-RHEL5/$imodfile\n",
+                     "chmod a+x $imodfile\n",
+                     "./$imodfile -yes\n",
+                     "rm -f $imodfile\n",
+                     "sudo -u centos echo 'module load mpi/openmpi-x86_64' >> /home/centos/.bash_profile\n",
+                     "sudo -u centos echo 'export LD_LIBRARY_PATH=/lib64:/usr/lib64/mpich/lib:/usr/local/IMOD/lib:/usr/local/IMOD/qtlib' >> /home/centos/.bash_profile\n",
+                     "sudo -u centos echo '. /usr/local/IMOD/IMOD-linux.sh' >> /home/centos/.bash_profile\n",
+                     "cfn-signal --exit-code 0 -i txbr1 '", { "Ref" : "WaitHandle" }, "'\n"
+                       ]]}}
+            }, 
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "4ad8b7df-e9a7-4256-9ab2-9f548d4bb695"
+                }
+            }
+        },
+        "InstanceSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Enable SSH access via port 22",
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": {
+                            "Ref": "AccessLocation"
+                        }
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "8080",
+                        "ToPort": "8080",
+                        "CidrIp": {
+                            "Ref": "AccessLocation"
+                        }
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "85d8cb29-8b24-41c8-bca9-498f219d2b6e"
+                }
+            }
+        },
+        "WaitHandle" : {
+            "Type" : "AWS::CloudFormation::WaitConditionHandle",
+            "Properties" : {
+            }
+        },
+        "WaitCondition" : {
+            "Type" : "AWS::CloudFormation::WaitCondition",
+            "DependsOn" : "TXBRInstance",
+            "Properties" : {
+                "Handle" : { "Ref" : "WaitHandle" },
+                "Timeout" : "4500"
+            }
+        }
+    },
+    "Outputs": {
+        "InstanceId": {
+            "Description": "InstanceId of the newly created EC2 instance",
+            "Value": {
+                "Ref": "TXBRInstance"
+            }
+        },
+        "AZ": {
+            "Description": "Availability Zone of the newly created EC2 instance",
+            "Value": {
+                "Fn::GetAtt": [
+                    "TXBRInstance",
+                    "AvailabilityZone"
+                ]
+            }
+        },
+        "PublicDNS": {
+            "Description": "Public DNSName of the newly created EC2 instance",
+            "Value": {
+                "Fn::GetAtt": [
+                    "TXBRInstance",
+                    "PublicDnsName"
+                ]
+            }
+        },
+        "PublicIP": {
+            "Description": "Public IP address of the newly created EC2 instance",
+            "Value": {
+                "Fn::GetAtt": [
+                    "TXBRInstance",
+                    "PublicIp"
+                ]
+            }
+        }
+    },
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "85d8cb29-8b24-41c8-bca9-498f219d2b6e": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 60,
+                    "y": 90
+                },
+                "z": 1,
+                "embeds": []
+            },
+            "4ad8b7df-e9a7-4256-9ab2-9f548d4bb695": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 180,
+                    "y": 90
+                },
+                "z": 1,
+                "embeds": [],
+                "isassociatedwith": [
+                    "85d8cb29-8b24-41c8-bca9-498f219d2b6e"
+                ]
+            }
+        }
+    }
+}
