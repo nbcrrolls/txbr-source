@@ -99,7 +99,7 @@
                      "yum -y update\n",
                      "yum install -y vim-minimal make python python-devel git wget tar environment-modules\n",
                      "yum install -y cmake epel-release tcsh\n",
-                     "yum install -y opencv opencv-devel opencv-python\n",
+                     "yum install -y opencv opencv-devel opencv-python screen\n",
                      "yum install -y qt qt-devel wget tcsh xauth xclock gcc-c++ mlocate time tree\n",
                      "yum install -y xorg-x11-fonts-* mesa-*\n",
                      "yum install -y python-pip python-wheel python-configobj unzip\n",
