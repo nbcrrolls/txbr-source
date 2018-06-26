@@ -1,33 +1,53 @@
-.PHONY: clean-pyc clean-build clean singularity
+.PHONY: clean-pyc clean-build clean singularity dist
+.DEFAULT_GOAL := help
+
+define BROWSER_PYSCRIPT
+import os, webbrowser, sys
+try:
+        from urllib import pathname2url
+except:
+        from urllib.request import pathname2url
+
+webbrowser.open("file://" + pathname2url(os.path.abspath(sys.argv[1])))
+endef
+export BROWSER_PYSCRIPT
+
+define PRINT_HELP_PYSCRIPT
+import re, sys
+
+for line in sys.stdin:
+        match = re.match(r'^([a-zA-Z_-]+):.*?## (.*)$$', line)
+        if match:
+                target, help = match.groups()
+                print("%-20s %s" % (target, help))
+endef
+export PRINT_HELP_PYSCRIPT
+BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
 help:
-	@echo "clean - remove all build, test, coverage and Python artifacts"
-	@echo "clean-build - remove build artifacts"
-	@echo "clean-pyc - remove Python file artifacts"
-	@echo "clean-test - remove test and coverage artifacts"
-	@echo "singularity - Creates singularity image"
+	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
-clean: clean-build clean-pyc clean-test
+clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
 
-clean-build:
+clean-build: ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
 	rm -fr .eggs/
 	find . -name '*.egg-info' -exec rm -fr {} +
 	find . -name '*.egg' -exec rm -fr {} +
 
-clean-pyc:
+clean-pyc: ## remove Python file artifacts
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
 	find . -name '__pycache__' -exec rm -fr {} +
 
-clean-test:
+clean-test: ## remove test and coverage artifacts
 	rm -fr .tox/
 	rm -f .coverage
 	rm -fr htmlcov/
 
-singularity:
+singularity:  ## creates singularity image
 	@echo 'Creating Singularity image'
 	mkdir -p dist
 	sudo rm -f dist/*.img
@@ -42,3 +62,37 @@ singularity:
 	rm -f dist/txbr.tar
 	echo 'Singularity Image created $imgfile'
 	ls -l dist
+
+checkrepo: ## checks if remote repo is CRBS
+	@therepo=`git remote get-url origin | sed "s/^.*://" | sed "s/\/.*//"` ;\
+        if [ "$$therepo" != "nbcrrolls" ] ; then \
+        echo "ERROR can only do a release from master nbcrrolls repo, not from $$therepo" ; \
+        exit 1 ;\
+        else \
+        echo "Repo appears to be master nbcrrolls $$therepo" ; \
+        fi
+
+updateversion: ## Updates version by updating VERSION file
+	@cv=`cat VERSION`; \
+        read -p "Current ($$cv) enter new version: " vers; \
+        echo "Updating VERSION with new version: $$vers"; \
+        echo $$vers > VERSION
+
+dist: clean ## creates distributable package
+	@vers=`cat VERSION` ; \
+        hvers=`cat VERSION | sed "s/\./-/g"` ;\
+        txbrdirname=txbr-$$vers ;\
+        distdir=dist/$$txbrdirname ;\
+        /bin/mkdir -p $$distdir ;\
+        cp -a * $$distdir/. ;\
+        /bin/rm -rf $$distdir/dist ;\
+	sed -i "s/txbr-stack-.*template/txbr-stack-$$hvers\&template/g" $$distdir/README.md ;\
+        sed -i "s/dist\/txbr-v*\.img/dist\/txbr-$$vers\.img/g" $$distdir/README.md ;\
+        sed -i "s/releases\/.*\/txbr.*\.json/releases\/$$vers\/txbr\_$$vers\_basic\_cloudformation.json/g" $$distdir/README.md ;\
+	sed -i "s/txbr-source\/archive\/.*\.tar.gz/txbr-source\/archive\/v$$vers\.tar\.gz/"g $$distdir/README.md ;\
+        sed -i "s/^tar -zxf txbr-source-.*tar.gz/tar -zxf txbr-source-$$vers.tar.gz/g" $$distdir/README.md ;\
+        sed -i "s/^cd txbr-source-.*/cd txbr-source-$$vers/g" $$distdir/README.md ;\
+        cat aws/basic_cloudformation.json | sed "s/@@VERSION@@/$${vers}/g" > dist/txbr_$${vers}_basic_cloudformation.json ;\
+        tar -C dist/ -cz $$txbrdirname > $$distdir.tar.gz ;\
+        ls -l dist
+
