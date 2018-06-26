@@ -41,6 +41,12 @@ Simply put, a lot of software is needed to get this working. Below is a list of 
 * [swiginac](https://launchpad.net/ubuntu/+archive/primary/+files/swiginac_1.5.1.orig.tar.gz)
 * gcc/g++
 
+## Quickstart TxBR on the cloud
+
+Click launch button to spin up the latest release of TxBR on the cloud (~20 minute spin up time):
+**(Oregon region)**
+
+[![Launch TxBR AWS CloudFormation link](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=txbr-stack-3-1-2&templateURL=https://s3-us-west-2.amazonaws.com/txbr-releases/3.1.2/txbr_3.1.2_basic_cloudformation.json)
 
 ### Installation
 
@@ -126,3 +132,5 @@ See license in this file: [LICENSE.txt](LICENSE.txt)
 # Credits & Acknowledgements
 
 * Developers: Sebastien Phan, Alexander Ward Kulungowski, Raj Singh, Masako Terada, James Obayashi, Albert Lawrence
+
+* This research benefitted from the use of credits from the National Institutes of Health (NIH) Cloud Credits Model Pilot, a component of the NIH Big Data to Knowledge (BD2K) program. 
