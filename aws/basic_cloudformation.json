@@ -23,7 +23,7 @@
             "ConstraintDescription": "must be a valid EC2 instance type."
         },
         "DiskSize": {
-            "Description": "Size of EC2 instance disk in gigabytes",
+            "Description": "Size of EC2 instance disk in gigabytes, 500 or larger",
             "Type": "Number",
             "Default": "500",
             "MinValue": "500",
@@ -37,8 +37,14 @@
             "Default": "0.0.0.0/0",
             "AllowedPattern": "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
             "ConstraintDescription": "must be a valid IP CIDR range of the form x.x.x.x/x."
+        },
+        "CILDataSetID": {
+            "Description": "NOT WORKING CIL Dataset ID ie CIL_7406 to download",
+            "Type": "String",
+            "Default": "",
+            "AllowedPattern": "(CIL|cil)_(\\d{1,4})|(CCDB|ccdb)_(\\d{1,4})|",
+            "ConstraintDescription": "must be CIL_### or CCDB_### or empty string"
         }
-	
     },
     "Mappings" : {
        "RegionMap" : {
@@ -156,6 +162,8 @@
                      "cd /home/centos\n",
                      "rm -f v${VERSION}.tar.gz\n",
                      "sed -i 's/GTKAgg/Agg/g' /usr/lib64/python2.7/site-packages/matplotlib/mpl-data/matplotlibrc\n",
+                     "CIL_DATASET_ID=", { "Ref" : "CILDataSetID" }, "\n",
+                     "sudo -u centos echo 'export CIL_ID='","$CIL_DATASET_ID >> /home/centos/.bash_profile\n",
                      "cfn-signal --exit-code 0 -i txbr1 '", { "Ref" : "WaitHandle" }, "'\n"
                        ]]}}
             }, 
