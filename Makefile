@@ -96,3 +96,22 @@ dist: clean ## creates distributable package
         tar -C dist/ -cz $$txbrdirname > $$distdir.tar.gz ;\
         ls -l dist
 
+release: dist checkrepo ## package and upload a release to s3
+	@echo "Creating new release"
+	@vers=`cat VERSION` ; \
+        tarfile=txbr-$${vers}.tar.gz ;\
+        cloudform=txbr_$${vers}_basic_cloudformation.json ;\
+        aws s3 cp dist/$$cloudform s3://txbr-releases/$${vers}/$$cloudform --acl public-read ; \
+        txbrdirname=txbr-$$vers ;\
+        distdir=dist/$$txbrdirname ;\
+        cp $$distdir/README.md . ;\
+        branchy=`git branch --list | sed "s/^\* *//"` ;\
+        git commit -m 'updated launch stack link' README.md ;\
+        git push origin $$branchy ;\
+        git tag -a v$${vers} -m 'new release' ; \
+        git push origin v$${vers} ; \
+        @echo "Congratulations on the new release" ;\
+        @echo "A new tag v$${vers} has been pushed to github" ;\
+        @echo "Cloud formation file has been uploaded to s3://txbr-releases/$${vers}/$$cloudform"
+
+
