@@ -97,7 +97,9 @@ dist: clean ## creates distributable package
         ls -l dist
 
 release: dist checkrepo ## package and upload a release to s3
-	@echo "Creating new release"
+	@echo "WARNING Creating new release in 15 seconds"
+	@echo "If you dont want to do this hit Ctrl-c now!!!!"
+	sleep 15
 	@vers=`cat VERSION` ; \
         tarfile=txbr-$${vers}.tar.gz ;\
         cloudform=txbr_$${vers}_basic_cloudformation.json ;\
@@ -110,8 +112,8 @@ release: dist checkrepo ## package and upload a release to s3
         git push origin $$branchy ;\
         git tag -a v$${vers} -m 'new release' ; \
         git push origin v$${vers} ; \
-        @echo "Congratulations on the new release" ;\
-        @echo "A new tag v$${vers} has been pushed to github" ;\
-        @echo "Cloud formation file has been uploaded to s3://txbr-releases/$${vers}/$$cloudform"
+        echo "Congratulations on the new release" ;\
+        echo "A new tag v$${vers} has been pushed to github" ;\
+        echo "Cloud formation file has been uploaded to s3://txbr-releases/$${vers}/$$cloudform"
 
 
