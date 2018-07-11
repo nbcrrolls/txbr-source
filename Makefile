@@ -107,7 +107,7 @@ release: dist checkrepo ## package and upload a release to s3
         txbrdirname=txbr-$$vers ;\
         distdir=dist/$$txbrdirname ;\
         cp $$distdir/README.md . ;\
-        branchy=`git branch --list | sed "s/^\* *//"` ;\
+        branchy=`git branch --list | sed "s/^\* *//" | head -n 1` ;\
         git commit -m 'updated launch stack link' README.md ;\
         git push origin $$branchy ;\
         git tag -a v$${vers} -m 'new release' ; \
