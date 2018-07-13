@@ -43,14 +43,16 @@ Simply put, a lot of software is needed to get this working. Below is a list of 
 
 ## Quickstart TxBR on the cloud
 
-Click launch button to spin up the latest release of TxBR on the cloud (~20 minute spin up time):
+Click launch button to spin up the latest release of TxBR on the cloud (~10 minute spin up time):
 **(Oregon region)**
 
 [![Launch TxBR AWS CloudFormation link](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=txbr-stack-3-1-2rc6&templateURL=https://s3-us-west-2.amazonaws.com/txbr-releases/3.1.2rc6/txbr_3.1.2rc6_basic_cloudformation.json)
 
+[Click here for detailed instructions on launching TxBR via AWS CloudFormation](https://github.com/nbcrrolls/txbr-source/wiki/Launching-TxBR-via-AWS-CloudFormation)
+
 ### Installation
 
-[To simply try TxBR out follow these instructions](https://github.com/nbcrrolls/txbr-source/wiki/Using-TXBR-Vagrant-Virtual-machine)
+[To try TxBR via Vagrant virtual machine out follow these instructions](https://github.com/nbcrrolls/txbr-source/wiki/Using-TXBR-Vagrant-Virtual-machine)
 
 **OR**
  
