@@ -7,6 +7,9 @@
 
 # Transform based Tracking, Bundle adjustment and Reconstruction (TxBR)
 
+[![DOI](https://zenodo.org/badge/63201614.svg)](https://zenodo.org/badge/latestdoi/63201614)
+
+
 Transform based Tracking, Bundle adjustment and Reconstruction (**TxBR**) is an electron tomography package developed on top of the [IMOD][imod] utilities. At this time, it does not offer any fiducial tracking options and it loosely follows the [ETomo][etomo] reconstruction scheme.
 
 This source tree was derived from updated versions of **TxBR** code found here:
