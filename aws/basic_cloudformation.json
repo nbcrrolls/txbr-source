@@ -114,7 +114,7 @@
                      "yum install -y libtiff libtiff-devel fftw-*\n",
                      "yum install -y numpy numpy-f2py scipy python-matplotlib*\n",
                      "yum install -y mpi4py-openmpi python-pillow* PackageKit-gtk3-module libcanberra-gtk2 libcanberra-gtk3 libcanberra-devel\n",
-                     "yum install -y swig* python-psutil sympy* Perl-Data-Dumper openmpi openmpi-devel\n",                     
+                     "yum install -y swig python-psutil sympy* Perl-Data-Dumper openmpi openmpi-devel\n",                     
                      "updatedb\n",
                      "echo 'Done installing dependencies'\n",
                      "pip install wheel\n",

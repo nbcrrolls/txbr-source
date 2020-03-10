@@ -23,7 +23,7 @@ InstallPkgs cln cln-devel ginac ginac-utils ginac-devel
 InstallPkgs libtiff libtiff-devel fftw-* 
 InstallPkgs numpy numpy-f2py scipy python-matplotlib*
 InstallPkgs mpi4py-openmpi mpi4py-mpich python-pillow* PackageKit-gtk3-module libcanberra-gtk2 libcanberra-gtk3 libcanberra-devel
-InstallPkgs swig* python-psutil sympy* Perl-Data-Dumper openmpi openmpi-devel
+InstallPkgs swig python-psutil sympy* Perl-Data-Dumper openmpi openmpi-devel
 
 RunCmd "updatedb"
 
