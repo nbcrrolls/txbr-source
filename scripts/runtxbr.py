@@ -175,7 +175,7 @@ def run_MPI_TxBR():
 
     if len(nodes)<=1 and (nodes[0]=='localhost' or nodes[0]=='127.0.0.1'):
 
-#        numberOfCPUs = int(0.8*psutil.NUM_CPUS)
+#        numberOfCPUs = int(0.8*psutil.cpu_count())
                 
         execute('mpiexec -n %i %s' %( numberOfCPUs, FILTER_CMD))
         execute('mpiexec -n %i %s' %( numberOfCPUs, BCKPRJ_CMD) )

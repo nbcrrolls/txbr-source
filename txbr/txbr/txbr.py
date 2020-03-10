@@ -7,10 +7,10 @@ import mrc
 import utilities
 import util
 
-from psutil import NUM_CPUS as PROCESS_POOL_SIZE
+import psutil
 from txbrconf import *
 
-PROCESS_POOL_SIZE = max(PROCESS_POOL_SIZE,20)
+PROCESS_POOL_SIZE = max(psutil.cpu_count(),20)
 
 def __rescale_proj_task__( scale_tf, projection, scaling_fn, scale_inv_tf ):
     """
